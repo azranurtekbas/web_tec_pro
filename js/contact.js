@@ -5,153 +5,134 @@ switchButton.addEventListener("click", () => {
   formWrapper.classList.toggle("active");
 });
 
-function formControl() {
-  const formName = document.querySelector("#isim");
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phoneRegex = /^\d+$/;
+
+// ── Native JS butonu ──────────────────────────────────────────────────────────
+document.getElementById("btn-js-validate").addEventListener("click", function () {
+  let valid = true;
+
+  const isim = document.getElementById("isim");
   const formNameWrapper = document.querySelector(".form-name");
-  const formSurName = document.querySelector("#soyisim");
-  const formSurameWrapper = document.querySelector(".form-surname");
-  const formMail = document.querySelector("#mail");
-  const formMailWrapper = document.querySelector(".form-mail");
-  const formAge = document.querySelector("#yas");
-  const formAgeWrapper = document.querySelector(".form-age");
-  const formGenderMale = document.querySelector("#erkek");
-  const formGenderFemale = document.querySelector("#kadın");
-  const formGenderwrapper = document.querySelector(".form-gender");
-  const formMesage = document.querySelector("#mesage");
-  const formMesagewrapper = document.querySelector(".form-mesage");
-  const formButton = document.querySelector("#contact-form-submit-button");
-  const formButtons = document.querySelector(".form-buttons");
-
-  formButtons.addEventListener("mousemove", (e) => {
-    if (formName.value === "") {
-      formNameWrapper.classList.add("active");
-    } else {
-      formNameWrapper.classList.remove("active");
-    }
-    if (formSurName.value === "") {
-      formSurameWrapper.classList.add("active");
-    } else {
-      formSurameWrapper.classList.remove("active");
-    }
-    if (formMail.value === "") {
-      formMailWrapper.classList.add("active");
-    } else {
-      formMailWrapper.classList.remove("active");
-    }
-    if (formAge.options[formAge.selectedIndex].text === "Seçiniz") {
-      formAgeWrapper.classList.add("active");
-    } else {
-      formAgeWrapper.classList.remove("active");
-    }
-    if (formGenderMale.checked || formGenderFemale.checked) {
-      formGenderwrapper.classList.remove("active");
-    } else {
-      formGenderwrapper.classList.add("active");
-    }
-    if (formMesage.value === "") {
-      formMesagewrapper.classList.add("active");
-    } else {
-      formMesagewrapper.classList.remove("active");
-    }
-  });
-
-  formName.addEventListener("input", (e) => {
-    if (e.target.value === "") {
-      formNameWrapper.classList.add("active");
-    } else {
-      formNameWrapper.classList.remove("active");
-    }
-  });
-
-  formSurName.addEventListener("input", (e) => {
-    if (e.target.value === "") {
-      formSurameWrapper.classList.add("active");
-    } else {
-      formSurameWrapper.classList.remove("active");
-    }
-  });
-
-  formMail.addEventListener("input", (e) => {
-    if (e.target.value === "") {
-      formMailWrapper.classList.add("active");
-    } else {
-      formMailWrapper.classList.remove("active");
-    }
-    if (e.target.value.search("@") === -1) {
-      console.log("icermiyor");
-      formMailWrapper.classList.add("active2");
-    } else {
-      console.log("iceriyor");
-      formMailWrapper.classList.remove("active2");
-    }
-  });
-
-  formAge.addEventListener("click", (e) => {
-    if (formAge.options[formAge.selectedIndex].text === "Seçiniz") {
-      formAgeWrapper.classList.add("active");
-    } else {
-      formAgeWrapper.classList.remove("active");
-    }
-  });
-
-  formGenderMale.addEventListener("click", (e) => {
-    if (formGenderMale.checked) {
-      formGenderwrapper.classList.remove("active");
-    } else {
-      formGenderwrapper.classList.add("active");
-    }
-  });
-  formGenderFemale.addEventListener("click", (e) => {
-    if (formGenderFemale.checked) {
-      formGenderwrapper.classList.remove("active");
-    } else {
-      formGenderwrapper.classList.add("active");
-    }
-  });
-
-  formMesage.addEventListener("input", (e) => {
-    if (e.target.value === "") {
-      formMesagewrapper.classList.add("active");
-    } else {
-      formMesagewrapper.classList.remove("active");
-    }
-  });
-
-  let allInvalids = document
-    .getElementById("contact-form")
-    .querySelectorAll(":invalid");
-
-  console.log(allInvalids);
-
-  if (allInvalids.length === 0) {
-    formButton.removeAttribute("disabled");
-    formButton.style.cursor = "pointer";
+  if (isim.value.trim() === "") {
+    formNameWrapper.classList.add("active");
+    valid = false;
   } else {
-    formButton.setAttribute("disabled", "disabled");
-    formButton.style.cursor = "no-drop";
+    formNameWrapper.classList.remove("active");
   }
 
-  formButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    let UserName;
-    let UserSurname;
-    let UserMail;
-    let UserAge;
-    let UserGender;
-    let UserMesage;
+  const soyisim = document.getElementById("soyisim");
+  const formSurnameWrapper = document.querySelector(".form-surname");
+  if (soyisim.value.trim() === "") {
+    formSurnameWrapper.classList.add("active");
+    valid = false;
+  } else {
+    formSurnameWrapper.classList.remove("active");
+  }
 
-    let UserDetails = [];
+  const mail = document.getElementById("mail");
+  const formMailWrapper = document.querySelector(".form-mail");
+  if (mail.value.trim() === "") {
+    formMailWrapper.classList.add("active");
+    formMailWrapper.classList.remove("active2");
+    valid = false;
+  } else if (!emailRegex.test(mail.value.trim())) {
+    formMailWrapper.classList.remove("active");
+    formMailWrapper.classList.add("active2");
+    valid = false;
+  } else {
+    formMailWrapper.classList.remove("active", "active2");
+  }
 
-    UserDetails.push({
-      UserName: formName.value,
-      UserSurname: formSurName.value,
-      UserMail: formMail.value,
-      UserGender: formGenderMale.checked,
-      UserAge: formAge.options[formAge.selectedIndex].text,
-      UserMesage: formMesage.value,
-    });
-    localStorage.setItem("UserDetails", JSON.stringify(UserDetails));
-    window.location.href = "contactdetails.html";
-  });
-}
-formControl();
+  const telefon = document.getElementById("telefon");
+  const formPhoneWrapper = document.querySelector(".form-phone");
+  if (telefon.value.trim() === "") {
+    formPhoneWrapper.classList.add("active");
+    formPhoneWrapper.classList.remove("active2");
+    valid = false;
+  } else if (!phoneRegex.test(telefon.value.trim())) {
+    formPhoneWrapper.classList.remove("active");
+    formPhoneWrapper.classList.add("active2");
+    valid = false;
+  } else {
+    formPhoneWrapper.classList.remove("active", "active2");
+  }
+
+  const yas = document.getElementById("yas");
+  const formAgeWrapper = document.querySelector(".form-age");
+  if (yas.value === "") {
+    formAgeWrapper.classList.add("active");
+    valid = false;
+  } else {
+    formAgeWrapper.classList.remove("active");
+  }
+
+  const gender = document.querySelector('input[name="gender"]:checked');
+  const formGenderWrapper = document.querySelector(".form-gender");
+  if (!gender) {
+    formGenderWrapper.classList.add("active");
+    valid = false;
+  } else {
+    formGenderWrapper.classList.remove("active");
+  }
+
+  const mesage = document.getElementById("mesage");
+  const formMesageWrapper = document.querySelector(".form-mesage");
+  if (mesage.value.trim() === "") {
+    formMesageWrapper.classList.add("active");
+    valid = false;
+  } else {
+    formMesageWrapper.classList.remove("active");
+  }
+
+  if (valid) {
+    document.getElementById("contact-form").submit();
+  }
+});
+
+// ── Anlık doğrulama ───────────────────────────────────────────────────────────
+document.getElementById("isim").addEventListener("input", function () {
+  const w = document.querySelector(".form-name");
+  this.value.trim() === "" ? w.classList.add("active") : w.classList.remove("active");
+});
+
+document.getElementById("soyisim").addEventListener("input", function () {
+  const w = document.querySelector(".form-surname");
+  this.value.trim() === "" ? w.classList.add("active") : w.classList.remove("active");
+});
+
+document.getElementById("mail").addEventListener("input", function () {
+  const w = document.querySelector(".form-mail");
+  if (this.value.trim() === "") {
+    w.classList.add("active");
+    w.classList.remove("active2");
+  } else if (!emailRegex.test(this.value.trim())) {
+    w.classList.remove("active");
+    w.classList.add("active2");
+  } else {
+    w.classList.remove("active", "active2");
+  }
+});
+
+document.getElementById("telefon").addEventListener("input", function () {
+  const w = document.querySelector(".form-phone");
+  if (this.value.trim() === "") {
+    w.classList.add("active");
+    w.classList.remove("active2");
+  } else if (!phoneRegex.test(this.value.trim())) {
+    w.classList.remove("active");
+    w.classList.add("active2");
+  } else {
+    w.classList.remove("active", "active2");
+  }
+});
+
+document.getElementById("yas").addEventListener("change", function () {
+  const w = document.querySelector(".form-age");
+  this.value === "" ? w.classList.add("active") : w.classList.remove("active");
+});
+
+document.getElementById("mesage").addEventListener("input", function () {
+  const w = document.querySelector(".form-mesage");
+  this.value.trim() === "" ? w.classList.add("active") : w.classList.remove("active");
+});

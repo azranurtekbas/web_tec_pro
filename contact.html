@@ -11,7 +11,6 @@
       integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
       crossorigin="anonymous"
     />
-
     <title>Ben Azra</title>
   </head>
   <body>
@@ -19,8 +18,7 @@
       <div class="maincontainer">
         <div class="header-wrapper">
           <a href="index.html">
-            Ben <br />
-            Azra
+            Ben <span class="logo-accent">Azra</span>
           </a>
         </div>
       </div>
@@ -46,54 +44,72 @@
       <div class="container">
         <form
           class="formmain"
-          action=""
+          action="contact_submit.php"
+          method="POST"
           id="contact-form"
-          onchange="formControl()"
         >
           <label class="formmain-item form-name" for="isim">
-            <span>isim</span>
-            <input type="text" id="isim" required />
+            <span>İsim</span>
+            <input type="text" id="isim" name="isim" />
           </label>
           <label class="formmain-item form-surname" for="soyisim">
-            <span>soyisim</span>
-            <input type="text" id="soyisim" required />
+            <span>Soyisim</span>
+            <input type="text" id="soyisim" name="soyisim" />
           </label>
           <label class="formmain-item form-mail" for="mail">
-            <span>mail</span>
-            <input type="email" id="mail" required />
+            <span>Mail</span>
+            <input type="email" id="mail" name="mail" />
+          </label>
+          <label class="formmain-item form-phone" for="telefon">
+            <span>Telefon</span>
+            <input type="tel" id="telefon" name="telefon" placeholder="05xxxxxxxxx" />
           </label>
           <label class="formmain-item form-age" for="yas">
             <span>Yasınız</span>
-            <select required name="" id="yas">
-              <option data="1" value="">Seçiniz</option>
-              <option data="2" value="">0-14</option>
-              <option data="3" value="">15-24</option>
-              <option data="4" value="">25-40</option>
-              <option data="5" value="">41-55</option>
-              <option data="6" value="">56-70</option>
-              <option data="7" value="">70+</option>
+            <select name="yas" id="yas">
+              <option value="">Seçiniz</option>
+              <option value="0-14">0-14</option>
+              <option value="15-24">15-24</option>
+              <option value="25-40">25-40</option>
+              <option value="41-55">41-55</option>
+              <option value="56-70">56-70</option>
+              <option value="70+">70+</option>
             </select>
           </label>
-          <label class="formmain-item form-gender" for="">
+          <label class="formmain-item form-gender">
             <span>Cinsiyet</span>
             <label for="erkek">Erkek</label>
-            <input required type="radio" id="erkek" name="gender" />
-            <label for="kadın">Kadın</label>
-            <input required type="radio" id="kadın" name="gender" />
+            <input type="radio" id="erkek" name="gender" value="Erkek" />
+            <label for="kadin">Kadın</label>
+            <input type="radio" id="kadin" name="gender" value="Kadın" />
           </label>
-
+          <label class="formmain-item form-newsletter">
+            <span>Bülten</span>
+            <div class="checkbox-group">
+              <input type="checkbox" id="newsletter" name="newsletter" value="evet" />
+              <label for="newsletter">Bülten almak istiyorum</label>
+            </div>
+          </label>
           <label class="formmain-item comment form-mesage" for="mesage">
             <span>Mesajınız</span>
-            <textarea name="" id="mesage" required></textarea>
+            <textarea name="mesage" id="mesage"></textarea>
           </label>
+
           <div class="form-buttons">
-            <button id="contact-form-submit-button" class="form-button">
-              Gonder
+            <button id="btn-js-validate" type="button" class="form-button">
+              JS ile Gönder
             </button>
+            <div id="vue-btn-app">
+              <button type="button" class="form-button" @click="validateAndSubmit">
+                Vue.js ile Gönder
+              </button>
+              <div id="vue-error-list"></div>
+            </div>
             <button class="form-button" type="reset">Sifirla</button>
           </div>
         </form>
       </div>
+
       <nav>
         <div class="nav-wrapper">
           <ul class="nav-list">
@@ -122,10 +138,61 @@
                 <i class="fa-solid fa-gamepad"></i>
               </a>
             </li>
+            <li class="nav-list-item active">
+              <a href="contact.html">
+                <i class="fa-solid fa-envelope"></i>
+              </a>
+            </li>
           </ul>
         </div>
       </nav>
     </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.5.13/dist/vue.global.prod.js"></script>
     <script src="js/contact.js"></script>
+    <script>
+      const { createApp } = Vue;
+      createApp({
+        methods: {
+          validateAndSubmit() {
+            const errors = [];
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^\d+$/;
+
+            const isim    = document.getElementById("isim").value.trim();
+            const soyisim = document.getElementById("soyisim").value.trim();
+            const mail    = document.getElementById("mail").value.trim();
+            const telefon = document.getElementById("telefon").value.trim();
+            const yas     = document.getElementById("yas").value;
+            const gender  = document.querySelector('input[name="gender"]:checked');
+            const mesage  = document.getElementById("mesage").value.trim();
+
+            if (!isim)    errors.push("İsim boş bırakılamaz.");
+            if (!soyisim) errors.push("Soyisim boş bırakılamaz.");
+            if (!mail || !emailRegex.test(mail))         errors.push("Geçerli bir e-posta adresi giriniz.");
+            if (!telefon || !phoneRegex.test(telefon))   errors.push("Telefon yalnızca rakamlardan oluşmalıdır.");
+            if (!yas)     errors.push("Yaş aralığı seçiniz.");
+            if (!gender)  errors.push("Cinsiyet seçiniz.");
+            if (!mesage)  errors.push("Mesaj boş bırakılamaz.");
+
+            const errorList = document.getElementById("vue-error-list");
+            if (errors.length > 0) {
+              errorList.innerHTML =
+                '<ul class="vue-errors">' +
+                errors.map(function(e) { return "<li>" + e + "</li>"; }).join("") +
+                "</ul>";
+            } else {
+              errorList.innerHTML = "";
+              document.getElementById("contact-form").submit();
+            }
+          },
+        },
+      }).mount("#vue-btn-app");
+    </script>
   </body>
 </html>

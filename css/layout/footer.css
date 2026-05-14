@@ -1,15 +1,18 @@
 footer {
-  position: sticky;
-  background-color: rgba(35, 37, 38, 0.8);
-  height: 96px;
+  background: rgba(14, 14, 26, 0.8);
+  border-top: 1px solid var(--border);
+  padding: 24px 0;
 }
+
 footer .maincontainer {
   display: flex;
   align-items: center;
-  height: 100%;
+  justify-content: center;
 }
 
 footer .maincontainer h4 {
-  font-size: 16px;
-  font-weight: 300;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
 }

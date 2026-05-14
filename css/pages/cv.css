@@ -1,125 +1,175 @@
 .cv-overflow {
   position: relative;
   width: 100%;
-  height: 100vh;
-  overflow-y: hidden;
-}
-.cv-wrapper {
-  max-height: 800px;
-  max-width: 1000px;
-  margin: 120px auto;
-  position: relative;
+  min-height: 100vh;
+  padding-top: 72px;
+  padding-bottom: 40px;
 }
 
+.cv-wrapper {
+  max-width: 960px;
+  margin: 40px auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+/* ── CV Başlık ────────────────────────────────────────────────── */
 .cv-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background-color: rgba(35, 37, 38, 0.8);
-  max-height: 240px;
-  padding: 15px 0;
+  background: linear-gradient(135deg, rgba(139,92,246,0.2) 0%, rgba(99,102,241,0.15) 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 40px;
+  gap: 32px;
 }
+
 .cv-img {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0px 40px;
-  max-width: 320px;
-}
-.cv-header-tittle {
-  margin-left: 60px;
-  margin-right: auto;
+  flex-shrink: 0;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 0 6px rgba(139, 92, 246, 0.15);
 }
 
 .cv-img img {
-  max-height: 240px;
-  width: 70%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .cv-header-tittle h2 {
-  font-size: 48px;
-  font-weight: 900;
-  line-height: 1.2;
-  text-shadow: 2px 3px 0px #898999;
-  margin-bottom: 5px !important;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px !important;
 }
 
-.cv-header-tittle h4,
-.cv-main h3,
-.nav-item h4 {
-  font-size: 34px;
-  font-weight: 700;
-  color: #414345;
-}
-
-.cv-main {
-  min-height: 70vh;
-  display: flex;
-  letter-spacing: 1.2px;
+.cv-header-tittle h4 {
   font-size: 16px;
-  font-weight: 400;
-}
-.cv-main::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url(../../img/backgroundX.png);
-  z-index: -1;
+  font-weight: 500;
+  color: var(--text-muted);
 }
 
+/* ── CV Ana içerik ────────────────────────────────────────────── */
+.cv-main {
+  display: flex;
+  background: var(--card);
+  backdrop-filter: blur(20px);
+  min-height: 500px;
+}
+
+/* Yan panel */
 .cv-main .cv-nav {
   display: flex;
   flex-direction: column;
-  padding: 40px 40px 0 40px;
-  row-gap: 20px;
-  max-width: 320px;
+  gap: 32px;
+  padding: 40px 32px;
+  background: rgba(139, 92, 246, 0.06);
+  border-right: 1px solid var(--border);
+  min-width: 240px;
 }
 
 .nav-item h4 {
-  font-size: 20px;
-}
-.cv-main h3 {
-  font-size: 30px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px !important;
 }
 
+.nav-item ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-item ul li {
+  font-size: 14px;
+  color: var(--text-muted);
+  padding: 4px 0;
+  padding-left: 12px;
+  border-left: 2px solid var(--border);
+  transition: var(--transition);
+}
+
+.nav-item ul li:hover {
+  border-left-color: var(--accent);
+  color: var(--text);
+  padding-left: 16px;
+}
+
+/* Ana içerik */
 .cv-main .article {
   display: flex;
   flex-direction: column;
-  row-gap: 40px;
-  max-width: 450px;
-  margin-left: 60px;
-  padding: 40px 0;
+  gap: 40px;
+  padding: 40px 48px;
+  flex: 1;
 }
 
+.cv-main .article article {
+  position: relative;
+  padding-left: 20px;
+  border-left: 2px solid rgba(139, 92, 246, 0.3);
+  transition: var(--transition);
+}
+
+.cv-main .article article:hover {
+  border-left-color: var(--accent);
+}
+
+.cv-main h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px !important;
+}
+
+.cv-main .article article p {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .cv-img {
-    padding: 0;
+  .cv-header {
+    padding: 24px 24px;
+    gap: 20px;
   }
-  .cv-img img {
-    width: 80%;
+  .cv-img {
+    width: 80px;
+    height: 80px;
   }
   .cv-header-tittle h2 {
-    font-size: 32px;
-  }
-  .cv-header-tittle h4 {
     font-size: 26px;
   }
 }
+
 @media (max-width: 576px) {
   .cv-main {
     flex-direction: column;
   }
-  .cv-overflow {
-    overflow-y: auto;
-  }
   .cv-main .cv-nav {
-    padding: 20px 0 10px 20px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 24px 20px;
+    min-width: 0;
+    gap: 20px;
   }
   .cv-main .article {
-    margin-left: 0;
-    padding: 20px 0 10px 20px;
+    padding: 24px 20px;
+    gap: 28px;
   }
 }

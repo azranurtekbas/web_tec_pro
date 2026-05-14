@@ -20,8 +20,7 @@
       <div class="maincontainer">
         <div class="header-wrapper">
           <a href="index.html">
-            Ben <br />
-            Azra
+            Ben <span class="logo-accent">Azra</span>
           </a>
         </div>
       </div>
@@ -95,6 +94,11 @@
           <li class="nav-list-item">
             <a href="myinterests.html">
               <i class="fa-solid fa-gamepad"></i>
+            </a>
+          </li>
+          <li class="nav-list-item">
+            <a href="contact.html">
+              <i class="fa-solid fa-envelope"></i>
             </a>
           </li>
         </ul>

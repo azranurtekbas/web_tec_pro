@@ -1,34 +1,53 @@
 header {
-  background-color: rgba(35, 37, 38, 0.8);
   position: fixed;
-  width: 100%;
   top: 0;
-  z-index: 1;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: rgba(8, 8, 16, 0.92) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
 }
 
 header .maincontainer {
-  height: 96px;
-}
-
-.maincontainer .header-wrapper {
-  display: flex;
-  justify-content: flex-start;
-  padding: 6px 0;
-  height: 100%;
-}
-
-.maincontainer .header-wrapper a {
+  height: 68px;
   display: flex;
   align-items: center;
-  color: #fff;
-  font-size: 28px;
-  font-weight: 900;
-  line-height: 1.2;
-  text-shadow: 2px 3px 0px #898999;
+}
+
+.header-wrapper a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  transition: opacity 0.3s ease;
+}
+
+/* br'yi gizle — logo tek satırda */
+.header-wrapper a br {
+  display: none;
+}
+
+/* "Azra" kısmı */
+.header-wrapper a .logo-accent {
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+.header-wrapper a:hover {
+  opacity: 0.8;
 }
 
 @media (max-width: 420px) {
-  header .maincontainer {
-    height: 72px;
-  }
+  header .maincontainer { height: 58px; }
+  .header-wrapper a { font-size: 17px; }
 }

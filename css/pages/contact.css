@@ -2,235 +2,350 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 
+/* ── Form ─────────────────────────────────────────────────────── */
 .formmain {
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
-  row-gap: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #181818;
-  padding: 30px 40px;
-  transition: visibility 0.2s cubic-bezier(0.755, 0.05, 0.855, 0.06);
+  gap: 14px;
+  width: 480px;
+  max-width: 95vw;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: rgba(8, 8, 16, 0.88);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 36px 40px;
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow: var(--shadow), 0 0 80px rgba(139, 92, 246, 0.08);
+  transition: visibility 0.2s ease, opacity 0.2s ease;
 }
+
+.formmain::-webkit-scrollbar {
+  width: 4px;
+}
+.formmain::-webkit-scrollbar-track {
+  background: transparent;
+}
+.formmain::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
 .formmain.active {
   visibility: hidden;
+  opacity: 0;
 }
+
 .formmain .formmain-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  font-size: 18px;
-  column-gap: 20px;
+  gap: 16px;
+  position: relative;
 }
 
 .formmain .formmain-item span {
-  color: #fff;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  font-weight: 600;
-  flex-basis: 85px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  flex-basis: 76px;
+  flex-shrink: 0;
 }
+
+.formmain-item input[type="text"],
+.formmain-item input[type="email"],
+.formmain-item input[type="tel"],
+.formmain-item textarea {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 13px;
+  padding: 9px 14px;
+}
+
 .formmain-item select {
-  flex-basis: calc(100% - 105px);
-  outline: 0 !important;
-}
-.comment textarea {
-  width: 100%;
-  min-height: 100px;
-  height: 100%;
-}
-
-.form-elements-test-area .form-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  column-gap: 20px;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 13px;
+  padding: 9px 14px;
+  outline: none;
+  transition: var(--transition);
 }
 
-.form-buttons .form-button {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #fff;
-  background-color: #232526;
-  border: none;
-  padding: 15px 40px;
-  position: relative;
-  display: flex;
-  justify-content: center;
+.formmain-item input:focus,
+.formmain-item select:focus,
+.formmain-item textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  outline: none;
 }
 
-.form-button:nth-child(1)::after {
-  width: 50%;
-  height: 3px;
-  background-color: #fff;
-  position: absolute;
-  content: "";
-  bottom: 9px;
-  opacity: 0;
-  transition: all 0.2s ease-in;
-}
-.form-button:nth-child(1):hover::after {
-  opacity: 1;
-}
-
-.form-button:nth-child(2)::after {
-  width: 50%;
-  height: 3px;
-  background-color: #fff;
-  position: absolute;
-  content: "";
-  bottom: 9px;
-  opacity: 0;
-  transition: all 0.2s ease-in;
-}
-.form-button:nth-child(2):hover::after {
-  opacity: 1;
-}
 .formmain-item.comment {
-  display: flex;
   flex-direction: column;
+  align-items: flex-start;
 }
 
 .formmain-item.comment span {
-  flex-basis: 0;
-  margin-bottom: 10px;
+  flex-basis: auto;
+  margin-bottom: 6px;
 }
+
+.comment textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: none;
+}
+
+/* Radio butonları */
 .formmain-item input[type="radio"] {
   appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
-  background-color: #fff;
+  background: rgba(255,255,255,0.08);
+  border: 2px solid var(--border);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: var(--transition);
 }
+
 .formmain-item input[type="radio"]:checked {
-  background-color: #414345;
+  background: var(--accent-grad);
+  border-color: transparent;
+  box-shadow: 0 0 0 3px var(--accent-glow);
 }
+
+.formmain-item label[for="erkek"],
+.formmain-item label[for="kadin"] {
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+/* Checkbox */
+.form-newsletter .checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-newsletter .checkbox-group label {
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.form-newsletter input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ── Butonlar ─────────────────────────────────────────────────── */
+.form-elements-test-area .form-buttons {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.form-buttons .form-button {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  border-radius: 50px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.form-buttons #btn-js-validate {
+  background: var(--accent-grad);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.35);
+}
+
+.form-buttons #btn-js-validate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(139, 92, 246, 0.5);
+}
+
+.form-buttons button[type="reset"] {
+  background: rgba(255,255,255,0.06);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.form-buttons button[type="reset"]:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--text);
+}
+
+/* Vue app div içindeki buton */
+#vue-btn-app .form-button {
+  background: rgba(99,102,241,0.15);
+  color: #a5b4fc;
+  border: 1px solid rgba(99,102,241,0.3);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 12px 20px;
+  border-radius: 50px;
+  transition: var(--transition);
+}
+
+#vue-btn-app .form-button:hover {
+  background: rgba(99,102,241,0.25);
+  border-color: rgba(99,102,241,0.5);
+  transform: translateY(-2px);
+}
+
+.vue-errors {
+  list-style: none;
+  margin: 8px 0 0 0 !important;
+  padding: 10px 14px !important;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-sm);
+}
+
+.vue-errors li {
+  color: #f87171;
+  font-size: 11px;
+  line-height: 1.8;
+  list-style: none;
+}
+
+/* ── Hata mesajları ───────────────────────────────────────────── */
 .formmain-item {
   position: relative;
 }
 
-.form-name.active::after {
-  content: "İsim Kısmı Boş Bırakılamaz";
-  position: absolute;
-  bottom: 2px;
-  right: 10px;
-  font-size: 10px;
-  color: red;
-}
-.form-surname.active::after {
-  content: "Soyisim Kısmı Boş Bırakılamaz";
-  position: absolute;
-  bottom: 2px;
-  right: 10px;
-  font-size: 10px;
-  color: red;
-}
-.form-mail.active::after {
-  content: "Mail Kısmı Boş Bırakılamaz";
-  position: absolute;
-  bottom: 2px;
-  right: 10px;
-  font-size: 10px;
-  color: red;
-}
-.form-mail.active2::after {
-  content: "Mail Adresi @ İçermelidir";
-  position: absolute;
-  bottom: 2px;
-  right: 10px;
-  font-size: 10px;
-  color: red;
-}
-.form-age.active::after {
-  content: "Yaş Kısmı Boş Bırakılamaz";
-  position: absolute;
-  bottom: 2px;
-  right: 10px;
-  font-size: 10px;
-  color: red;
-}
-.form-gender.active::after {
-  content: "Cinsiyet Kısmı Boş Bırakılamaz";
-  position: absolute;
-  bottom: -15px;
-  right: 5px;
-  font-size: 10px;
-  color: red;
-}
+.form-name.active::after,
+.form-surname.active::after,
+.form-mail.active::after,
+.form-mail.active2::after,
+.form-phone.active::after,
+.form-phone.active2::after,
+.form-age.active::after,
+.form-gender.active::after,
 .form-mesage.active::after {
-  content: "Mesaj Kısmı Boş Bırakılamaz";
   position: absolute;
-  bottom: -15px;
-  right: 5px;
+  right: 6px;
   font-size: 10px;
-  color: red;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #f87171;
+  pointer-events: none;
 }
+
+.form-name.active::after         { content: "Boş bırakılamaz"; bottom: 3px; }
+.form-surname.active::after      { content: "Boş bırakılamaz"; bottom: 3px; }
+.form-mail.active::after         { content: "Boş bırakılamaz"; bottom: 3px; }
+.form-mail.active2::after        { content: "Geçersiz e-posta"; bottom: 3px; }
+.form-phone.active::after        { content: "Boş bırakılamaz"; bottom: 3px; }
+.form-phone.active2::after       { content: "Yalnızca rakam giriniz"; bottom: 3px; }
+.form-age.active::after          { content: "Seçim yapınız"; bottom: 3px; }
+.form-gender.active::after       { content: "Cinsiyet seçiniz"; bottom: -14px; right: 4px; }
+.form-mesage.active::after       { content: "Boş bırakılamaz"; bottom: -14px; right: 4px; }
+
+/* Input hata durumu görsel */
+.form-name.active input,
+.form-surname.active input,
+.form-mail.active input,
+.form-mail.active2 input,
+.form-phone.active input,
+.form-phone.active2 input,
+.form-age.active select,
+.form-mesage.active textarea {
+  border-color: rgba(239, 68, 68, 0.5) !important;
+}
+
+/* ── Toggle (harita aç/kapat) ─────────────────────────────────── */
 .on-off-button {
   position: absolute;
-  top: 120px;
-  right: 40px;
-  z-index: 2;
+  top: 90px;
+  right: 28px;
+  z-index: 10;
 }
+
 .on-off-button input {
   visibility: hidden;
   position: absolute;
 }
+
 .on-off-button input:checked ~ .check::before {
   transform: translateX(38px);
 }
+
 .on-off-button .check {
   display: flex;
   align-items: center;
   position: relative;
-  background-color: #414345;
-  width: 80px;
-  height: 40px;
-  border-radius: 20px;
-  color: #fff;
+  background: rgba(139, 92, 246, 0.25);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  width: 72px;
+  height: 36px;
+  border-radius: 18px;
   cursor: pointer;
+  transition: var(--transition);
+}
+
+.on-off-button .check:hover {
+  background: rgba(139, 92, 246, 0.35);
 }
 
 .check::before {
-  width: 25px;
-  height: 25px;
-  border-radius: 100%;
-  background-color: #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent-grad);
   position: absolute;
-  left: 8px;
+  left: 6px;
   content: "";
-  transition: all 0.2s ease-in;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.5);
 }
 
+/* ── Responsive ───────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .formmain {
-    row-gap: 10px;
-    padding: 20px 30px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .formmain .formmain-item {
-    font-size: 14px;
-  }
-  .comment textarea {
-    min-height: 0px !important;
-    max-height: 80px !important;
-  }
-  .formmain-item select {
-    flex-basis: calc(100% - 120px);
+    width: 94vw;
+    padding: 28px 24px;
+    gap: 12px;
   }
 }
+
 @media (max-width: 420px) {
   .on-off-button {
-    top: 80px;
-    right: 5px;
+    top: 72px;
+    right: 12px;
+  }
+  .formmain {
+    padding: 20px 16px;
+  }
+  .form-buttons .form-button {
+    padding: 10px 14px;
+    font-size: 11px;
   }
 }
